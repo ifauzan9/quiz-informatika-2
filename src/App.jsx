@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { 
   Trophy, Play, CheckCircle2, XCircle, Clock, Keyboard, 
   RotateCcw, MonitorPlay, Home, Star, BookOpen, X, Settings
@@ -64,6 +64,10 @@ export default function App() {
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showQuitModal, setShowQuitModal] = useState(false); // STATE BARU: Konfirmasi kembali ke menu
 
+  // --- REFS (Mencegah Double-Tap / Sentuhan Multi-Jari Secara Instan) ---
+  const lockMerah = useRef(false);
+  const lockBiru = useRef(false);
+
   // --- STATES PENGATURAN (SETTINGS) ---
   const [settingQuestionCount, setSettingQuestionCount] = useState(15);
   const [settingTimeLimit, setSettingTimeLimit] = useState(15);
@@ -87,6 +91,8 @@ export default function App() {
     setAnswerMerah(null);
     setAnswerBiru(null);
     setAnswerOrder([]); // RESET URUTAN
+    lockMerah.current = false;
+    lockBiru.current = false;
     setHistoryMerah([]); // RESET HISTORY
     setHistoryBiru([]);  // RESET HISTORY
     setTimeLeft(settingTimeLimit);
@@ -101,6 +107,8 @@ export default function App() {
       setAnswerMerah(null);
       setAnswerBiru(null);
       setAnswerOrder([]); // RESET URUTAN
+      lockMerah.current = false;
+      lockBiru.current = false;
       setTimeLeft(settingTimeLimit);
       setIsTransitioning(false);
     } else {
@@ -160,14 +168,16 @@ export default function App() {
   const handlePlayerInput = useCallback((player, selectedOption) => {
     if (isTransitioning) return; // Abaikan input jika sedang masa transisi antar soal
 
-    if (player === 'merah' && answerMerah === null) {
+    if (player === 'merah' && !lockMerah.current) {
+      lockMerah.current = true; // Kunci seketika! Cegah sentuhan beruntun dalam milidetik yang sama
       setAnswerMerah(selectedOption);
       setAnswerOrder(prev => [...prev, 'merah']);
-    } else if (player === 'biru' && answerBiru === null) {
+    } else if (player === 'biru' && !lockBiru.current) {
+      lockBiru.current = true; // Kunci seketika!
       setAnswerBiru(selectedOption);
       setAnswerOrder(prev => [...prev, 'biru']);
     }
-  }, [isTransitioning, answerMerah, answerBiru]);
+  }, [isTransitioning]);
 
   // --- EFFECT: CEK JIKA KEDUA PEMAIN SUDAH MENJAWAB ---
   useEffect(() => {
@@ -466,8 +476,8 @@ export default function App() {
               return (
                 <div 
                   key={`merah-${idx}`} 
-                  onClick={() => handlePlayerInput('merah', idx)}
-                  className={`relative p-4 md:p-5 rounded-xl border-2 transition-all duration-300 ${boxColor} flex items-center min-h-[4rem] ${answerMerah === null && !isTransitioning ? 'cursor-pointer hover:scale-[1.02]' : 'cursor-default'}`}
+                  onPointerDown={() => handlePlayerInput('merah', idx)}
+                  className={`relative p-4 md:p-5 rounded-xl border-2 transition-all duration-300 ${boxColor} flex items-center min-h-[4rem] touch-none select-none ${answerMerah === null && !isTransitioning ? 'cursor-pointer hover:scale-[1.02] active:scale-95' : 'cursor-default'}`}
                 >
                   <div className="absolute top-1/2 -translate-y-1/2 left-3 bg-slate-900 text-slate-400 font-bold text-xs px-3 py-1.5 rounded shadow-inner">
                     {['A', 'B', 'C', 'D'][idx]}
@@ -527,8 +537,8 @@ export default function App() {
               return (
                 <div 
                   key={`biru-${idx}`} 
-                  onClick={() => handlePlayerInput('biru', idx)}
-                  className={`relative p-4 md:p-5 rounded-xl border-2 transition-all duration-300 ${boxColor} flex items-center min-h-[4rem] ${answerBiru === null && !isTransitioning ? 'cursor-pointer hover:scale-[1.02]' : 'cursor-default'}`}
+                  onPointerDown={() => handlePlayerInput('biru', idx)}
+                  className={`relative p-4 md:p-5 rounded-xl border-2 transition-all duration-300 ${boxColor} flex items-center min-h-[4rem] touch-none select-none ${answerBiru === null && !isTransitioning ? 'cursor-pointer hover:scale-[1.02] active:scale-95' : 'cursor-default'}`}
                 >
                   <div className="absolute top-1/2 -translate-y-1/2 left-3 bg-slate-900 text-slate-400 font-bold text-xs px-3 py-1.5 rounded shadow-inner">
                     {['A', 'B', 'C', 'D'][idx]}
