@@ -4,9 +4,11 @@ import {
   RotateCcw, MonitorPlay, Home, Star, BookOpen, X, Settings
 } from 'lucide-react';
 
-// BANK SOAL (Sebagian ditampilkan, Anda bisa menggunakan 150/180 soal yang sudah Anda miliki)
+// BANK SOAL (180 Soal Unik Tingkat SMP/SMA)
 const QUESTION_BANK = [
-  // --- HARDWARE ---
+  // ==========================================
+  // KATEGORI 1: HARDWARE (30 Soal)
+  // ==========================================
   { q: "Perangkat keras komputer yang berfungsi sebagai otak utama untuk memproses data adalah...", options: ["RAM", "CPU (Prosesor)", "Hardisk", "Motherboard"], answer: 1 },
   { q: "Berikut ini yang termasuk perangkat keluaran (Output Device) adalah...", options: ["Mouse", "Keyboard", "Scanner", "Printer"], answer: 3 },
   { q: "Perangkat keras yang digunakan untuk memasukkan huruf dan angka ke dalam komputer adalah...", options: ["Monitor", "Mouse", "Keyboard", "Printer"], answer: 2 },
@@ -17,30 +19,196 @@ const QUESTION_BANK = [
   { q: "Singkatan dari RAM adalah...", options: ["Random Access Memory", "Read Access Memory", "Run Access Memory", "Real Access Memory"], answer: 0 },
   { q: "Memori penyimpanan sementara yang isinya hilang saat komputer dimatikan disebut...", options: ["ROM", "Flashdisk", "SSD", "RAM"], answer: 3 },
   { q: "Jenis memori yang isinya permanen dan tidak hilang meski komputer dimatikan adalah...", options: ["RAM", "Cache", "ROM", "Register"], answer: 2 },
-  // --- SOFTWARE ---
+  { q: "Perangkat yang berfungsi untuk menyimpan data secara permanen dengan kapasitas besar adalah...", options: ["RAM", "Prosesor", "Hard Drive (HDD)", "VGA Card"], answer: 2 },
+  { q: "Papan sirkuit utama tempat semua komponen komputer terhubung disebut...", options: ["Processor", "Motherboard", "Power Supply", "Hardisk"], answer: 1 },
+  { q: "Perangkat yang menyuplai arus listrik ke seluruh komponen di dalam CPU adalah...", options: ["Power Supply (PSU)", "Motherboard", "Stabilizer", "RAM"], answer: 0 },
+  { q: "Kartu ekspansi yang berfungsi memproses grafis untuk ditampilkan ke monitor adalah...", options: ["Sound Card", "Network Card", "VGA Card", "RAM Card"], answer: 2 },
+  { q: "Media penyimpanan data yang ukurannya kecil, portabel, dan ditancapkan ke port USB adalah...", options: ["Hardisk Internal", "CD-ROM", "Disket", "Flashdisk"], answer: 3 },
+  { q: "Generasi penyimpanan yang lebih cepat dari HDD dan tidak menggunakan piringan magnetik adalah...", options: ["FDD", "SSD", "CD", "DVD"], answer: 1 },
+  { q: "Perangkat input yang digunakan untuk bermain game, biasanya memiliki tuas dan tombol adalah...", options: ["Mouse", "Keyboard", "Joystick", "Scanner"], answer: 2 },
+  { q: "Alat yang berfungsi merubah suara menjadi data digital ke dalam komputer adalah...", options: ["Speaker", "Microphone", "Headset", "Soundcard"], answer: 1 },
+  { q: "Kamera kecil yang biasanya terpasang di atas monitor komputer atau laptop disebut...", options: ["CCTV", "Webcam", "Handycam", "Kamera Digital"], answer: 1 },
+  { q: "Perangkat yang menampilkan layar komputer ke dinding atau layar lebar adalah...", options: ["Monitor", "Televisi", "Proyektor LCD", "Scanner"], answer: 2 },
+  { q: "Baterai kecil di motherboard yang menjaga agar waktu dan tanggal tetap berjalan adalah...", options: ["Baterai AAA", "Baterai CMOS", "Baterai Li-ion", "Power Bank"], answer: 1 },
+  { q: "Kipas pendingin yang menempel di atas prosesor untuk mencegah overheat disebut...", options: ["Exhaust Fan", "Heatsink Fan", "Cooling Pad", "Chiller"], answer: 1 },
+  { q: "Perangkat untuk membaca dan menulis data pada kepingan CD atau DVD adalah...", options: ["Flash Drive", "Optical Drive", "Hard Drive", "SSD Drive"], answer: 1 },
+  { q: "Port berbentuk persegi panjang yang paling umum digunakan untuk flashdisk dan mouse adalah...", options: ["Port VGA", "Port HDMI", "Port USB", "Port Audio"], answer: 2 },
+  { q: "Port yang berfungsi untuk menyalurkan video dan audio berkualitas tinggi (HD) sekaligus adalah...", options: ["Port USB", "Port VGA", "Port HDMI", "Port LAN"], answer: 2 },
+  { q: "Alat pemindai garis-garis hitam putih pada kemasan produk di kasir disebut...", options: ["Webcam", "Printer", "Barcode Scanner", "Proyektor"], answer: 2 },
+  { q: "Perangkat yang berfungsi seperti mouse, tetapi menyatu pada badan laptop disebut...", options: ["Trackball", "Touchpad", "Touchscreen", "Stylus"], answer: 1 },
+  { q: "Berapa bit yang terdapat dalam 1 Byte?", options: ["2 Bit", "4 Bit", "8 Bit", "16 Bit"], answer: 2 },
+  { q: "Berapa kapasitas penyimpanan standar dari sebuah CD-R?", options: ["700 MB", "1.44 MB", "4.7 GB", "1 TB"], answer: 0 },
+  { q: "Perangkat tambahan yang memberikan daya cadangan sementara saat listrik tiba-tiba mati adalah...", options: ["Stabilizer", "Genset", "UPS", "Power Supply"], answer: 2 },
+
+  // ==========================================
+  // KATEGORI 2: SOFTWARE & OS (30 Soal)
+  // ==========================================
   { q: "Program atau aplikasi di dalam komputer yang tidak bisa diraba secara fisik disebut...", options: ["Hardware", "Software", "Brainware", "CPU"], answer: 1 },
   { q: "Manusia yang menggunakan, mengoperasikan, dan mengatur komputer disebut...", options: ["Hardware", "Software", "Brainware", "Malware"], answer: 2 },
   { q: "Fungsi utama dari sebuah Sistem Operasi (OS) pada komputer adalah...", options: ["Mengetik dokumen", "Bermain game", "Mengelola hardware & software", "Mengedit foto"], answer: 2 },
-  { q: "Di bawah ini yang merupakan contoh Sistem Operasi (OS) komputer adalah...", options: ["Microsoft Office", "Windows", "Google", "Instagram"], answer: 1 },
+  { q: "Di bawah ini yang merupakan contoh Sistem Operasi (OS) untuk PC/Laptop adalah...", options: ["Microsoft Word", "Windows", "Google Chrome", "Instagram"], answer: 1 },
   { q: "Sistem operasi berlogo pinguin yang bersifat gratis dan open-source adalah...", options: ["Windows", "macOS", "Linux", "Android"], answer: 2 },
-  // --- JARINGAN ---
+  { q: "Sistem operasi buatan perusahaan Apple yang digunakan khusus untuk perangkat Mac adalah...", options: ["Windows", "Android", "Linux", "macOS"], answer: 3 },
+  { q: "Sistem operasi mobile paling populer di dunia yang dikembangkan oleh Google adalah...", options: ["iOS", "Symbian", "Android", "BlackBerry OS"], answer: 2 },
+  { q: "Software yang kode sumbernya terbuka dan bebas dimodifikasi oleh siapa saja disebut...", options: ["Freeware", "Shareware", "Open Source", "Commercial"], answer: 2 },
+  { q: "Aplikasi yang digunakan untuk memutar file musik dan video disebut...", options: ["Web Browser", "Media Player", "Word Processor", "Spreadsheet"], answer: 1 },
+  { q: "Software yang dirancang khusus untuk merusak atau menyusup ke sistem komputer disebut...", options: ["Hardware", "Freeware", "Malware", "Firmware"], answer: 2 },
+  { q: "Program yang berfungsi untuk mendeteksi dan menghapus virus komputer adalah...", options: ["Web Browser", "Antivirus", "Media Player", "Firewall"], answer: 1 },
+  { q: "Di bawah ini yang merupakan aplikasi desain grafis pengolah gambar vektor adalah...", options: ["CorelDraw", "Microsoft Word", "Notepad", "Winamp"], answer: 0 },
+  { q: "Aplikasi Adobe yang paling populer digunakan untuk mengedit/memanipulasi foto (bitmap) adalah...", options: ["Adobe Premiere", "Adobe Illustrator", "Adobe Photoshop", "Adobe Reader"], answer: 2 },
+  { q: "Aplikasi yang digunakan untuk membaca dokumen dalam format PDF adalah...", options: ["Microsoft Excel", "Adobe Reader", "Notepad", "Paint"], answer: 1 },
+  { q: "Software utility yang digunakan untuk mengompres atau mengecilkan ukuran file adalah...", options: ["VLC", "WinRAR", "Chrome", "Avast"], answer: 1 },
+  { q: "Perangkat lunak gratis namun menampilkan banyak iklan di dalamnya disebut...", options: ["Spyware", "Adware", "Malware", "Open Source"], answer: 1 },
+  { q: "Software uji coba yang bisa digunakan gratis tetapi dengan batasan waktu/fitur disebut...", options: ["Shareware", "Freeware", "Open Source", "Firmware"], answer: 0 },
+  { q: "Istilah untuk tampilan antarmuka pengguna berbasis grafis (ikon, jendela) adalah...", options: ["CLI", "GUI", "DOS", "BIOS"], answer: 1 },
+  { q: "Tampilan awal saat komputer pertama kali selesai booting pada Windows disebut...", options: ["Taskbar", "Start Menu", "Desktop", "Screensaver"], answer: 2 },
+  { q: "Aplikasi bawaan Windows yang digunakan untuk menggambar sederhana adalah...", options: ["Corel", "Photoshop", "Paint", "Calculator"], answer: 2 },
+  { q: "Sistem operasi berbasis teks (Command Line) yang populer sebelum era Windows adalah...", options: ["Android", "macOS", "MS-DOS", "Ubuntu"], answer: 2 },
+  { q: "Pusat pengaturan sistem pada OS Windows dimana kita bisa menghapus aplikasi disebut...", options: ["My Computer", "Control Panel", "Recycle Bin", "Command Prompt"], answer: 1 },
+  { q: "Tempat penampungan file sementara setelah dihapus (sebelum dihapus permanen) pada Windows adalah...", options: ["My Documents", "Local Disk C", "Recycle Bin", "Downloads"], answer: 2 },
+  { q: "Kombinasi tombol keyboard untuk menutup paksa aplikasi yang 'Not Responding' (Task Manager) adalah...", options: ["Ctrl + Alt + Del", "Ctrl + C", "Alt + F4", "Windows + D"], answer: 0 },
+  { q: "Ekstensi (format) file standar untuk aplikasi program yang bisa dieksekusi di Windows adalah...", options: [".jpg", ".mp3", ".exe", ".txt"], answer: 2 },
+  { q: "Ekstensi file standar untuk sebuah gambar/foto adalah...", options: [".doc", ".jpg / .png", ".mp4", ".xls"], answer: 1 },
+  { q: "Aplikasi bawaan Windows yang paling dasar untuk mengetik teks tanpa format adalah...", options: ["WordPad", "Microsoft Word", "Notepad", "Excel"], answer: 2 },
+  { q: "Perangkat lunak yang ditanamkan secara permanen ke dalam chip memori (contoh: BIOS) disebut...", options: ["Software", "Malware", "Firmware", "Hardware"], answer: 2 },
+  { q: "Aplikasi yang berfungsi menjembatani komunikasi antara OS dengan perangkat keras tertentu disebut...", options: ["Driver", "Antivirus", "Browser", "Compiler"], answer: 0 },
+  { q: "Sistem operasi Linux yang sangat populer dengan logo lingkaran oranye-merah-kuning adalah...", options: ["Debian", "Ubuntu", "Kali Linux", "Fedora"], answer: 1 },
+
+  // ==========================================
+  // KATEGORI 3: JARINGAN & INTERNET (30 Soal)
+  // ==========================================
   { q: "Jaringan komputer yang hanya mencakup area satu ruangan, gedung, atau sekolah disebut...", options: ["WAN", "MAN", "LAN", "PAN"], answer: 2 },
+  { q: "Jaringan komputer yang menghubungkan jaringan antarkota atau provinsi disebut...", options: ["LAN", "MAN", "WAN", "Internet"], answer: 1 },
   { q: "Jaringan komputer global yang saling terhubung mencakup seluruh dunia disebut...", options: ["LAN", "MAN", "WAN", "Internet"], answer: 3 },
-  { q: "Jaringan nirkabel (tanpa kabel) sering disebut juga dengan...", options: ["Wired", "Wireless", "Fiber Optik", "LAN"], answer: 1 },
+  { q: "Jaringan nirkabel (tanpa kabel) sering disebut juga dengan...", options: ["Wired", "Wireless", "Fiber Optik", "Ethernet"], answer: 1 },
   { q: "Bentuk topologi di mana setiap komputer terhubung ke satu titik pusat (Hub/Switch) disebut...", options: ["Star", "Ring", "Bus", "Mesh"], answer: 0 },
+  { q: "Topologi jaringan dimana komputer dihubungkan membentuk sebuah lingkaran tertutup disebut topologi...", options: ["Bus", "Star", "Ring", "Tree"], answer: 2 },
   { q: "Kepanjangan dari Wi-Fi adalah...", options: ["Wireless Fidelity", "Wide Fire", "Wireless File", "Wide Fidelity"], answer: 0 },
-  // --- OFFICE ---
+  { q: "Perangkat keras yang berfungsi untuk membagi sinyal internet / memancarkan sinyal Wi-Fi adalah...", options: ["Switch", "Hub", "Router", "LAN Card"], answer: 2 },
+  { q: "Alamat identitas numerik (angka) untuk komputer yang terhubung dalam jaringan disebut...", options: ["MAC Address", "IP Address", "URL Address", "Email Address"], answer: 1 },
+  { q: "Kepanjangan dari WWW pada alamat website adalah...", options: ["World Wide Web", "World Web Wide", "Word Wide Web", "Web Wide World"], answer: 0 },
+  { q: "Aplikasi perangkat lunak yang digunakan untuk membuka/menjelajahi halaman web disebut...", options: ["Search Engine", "Web Browser", "Web Server", "Web Design"], answer: 1 },
+  { q: "Di bawah ini yang TIDAK termasuk Web Browser adalah...", options: ["Mozilla Firefox", "Google Chrome", "Google Search", "Microsoft Edge"], answer: 2 },
+  { q: "Mesin pencari (Search Engine) yang paling populer dan banyak digunakan di dunia adalah...", options: ["Yahoo!", "Bing", "Google", "DuckDuckGo"], answer: 2 },
+  { q: "Perusahaan atau organisasi yang menyediakan layanan sambungan internet (seperti Telkomsel/Indihome) disebut...", options: ["ISP", "ASP", "WWW", "HTTP"], answer: 0 },
+  { q: "Singkatan dari ISP adalah...", options: ["Internet Service Protocol", "Internet Service Provider", "Internal System Provider", "Internet Secure Protocol"], answer: 1 },
+  { q: "Protokol standar yang digunakan untuk mentransfer data halaman web (biasa ada di depan URL) adalah...", options: ["FTP", "SMTP", "HTTP", "TCP"], answer: 2 },
+  { q: "Huruf 'S' pada HTTPS (seperti https://www.google.com) merupakan singkatan dari...", options: ["System", "Secure", "Server", "Speed"], answer: 1 },
+  { q: "Sistem yang menerjemahkan alamat IP berupa angka menjadi nama domain (misal google.com) disebut...", options: ["DNS", "DHCP", "FTP", "TCP/IP"], answer: 0 },
+  { q: "Nama atau alamat unik untuk mengidentifikasi sebuah website di internet disebut...", options: ["Domain", "IP Address", "Hosting", "Server"], answer: 0 },
+  { q: "Tempat penyimpanan data dari sebuah website di internet agar bisa diakses 24 jam disebut...", options: ["Domain", "Browser", "Web Hosting", "Client"], answer: 2 },
+  { q: "Jenis kabel jaringan tembaga berlilitan yang paling umum digunakan untuk LAN adalah...", options: ["Kabel Coaxial", "Kabel Fiber Optik", "Kabel Listrik", "Kabel UTP"], answer: 3 },
+  { q: "Konektor transparan yang dipasang di ujung kabel UTP jaringan LAN disebut...", options: ["RJ-11", "RJ-45", "USB", "HDMI"], answer: 1 },
+  { q: "Kabel jaringan masa kini yang menggunakan cahaya untuk mentransfer data berkecepatan tinggi adalah...", options: ["Coaxial", "UTP", "Fiber Optik", "STP"], answer: 2 },
+  { q: "Kepanjangan dari URL adalah...", options: ["Uniform Resource Locator", "Universal Routing Line", "Unified Resource Link", "User Routing Locator"], answer: 0 },
+  { q: "Kegiatan memindahkan file (mengambil) dari server internet ke komputer kita disebut...", options: ["Upload", "Download", "Browsing", "Chatting"], answer: 1 },
+  { q: "Kegiatan mengirimkan file dari komputer kita ke server internet disebut...", options: ["Download", "Upload", "Streaming", "Surfing"], answer: 1 },
+  { q: "Menonton video secara langsung di internet tanpa harus mengunduh file-nya secara utuh disebut...", options: ["Downloading", "Uploading", "Streaming", "Browsing"], answer: 2 },
+  { q: "Jaringan privat internal sebuah perusahaan/sekolah yang menggunakan teknologi internet disebut...", options: ["Ekstranet", "Intranet", "Internet", "Localnet"], answer: 1 },
+  { q: "Tanda '@' pada sebuah alamat e-mail dibaca dengan sebutan...", options: ["At", "A-keong", "And", "About"], answer: 0 },
+  { q: "Protokol jaringan yang secara spesifik digunakan untuk mengirim e-mail adalah...", options: ["HTTP", "FTP", "DHCP", "SMTP"], answer: 3 },
+
+  // ==========================================
+  // KATEGORI 4: OFFICE (Word, Excel, PPT) (30 Soal)
+  // ==========================================
   { q: "Perangkat lunak Microsoft yang fungsi utamanya untuk mengetik surat atau makalah adalah...", options: ["Microsoft Word", "Microsoft Excel", "CorelDraw", "Notepad"], answer: 0 },
   { q: "Perangkat lunak yang khusus digunakan untuk mengolah angka dan tabel adalah...", options: ["Microsoft Word", "Microsoft PowerPoint", "Microsoft Excel", "Adobe Photoshop"], answer: 2 },
+  { q: "Aplikasi Microsoft yang dirancang khusus untuk membuat tayangan presentasi adalah...", options: ["Microsoft Word", "Microsoft Access", "Microsoft Publisher", "Microsoft PowerPoint"], answer: 3 },
   { q: "Kombinasi tombol keyboard (shortcut) untuk menyalin teks (Copy) adalah...", options: ["Ctrl + C", "Ctrl + V", "Ctrl + X", "Ctrl + P"], answer: 0 },
+  { q: "Kombinasi tombol keyboard (shortcut) untuk menempelkan teks (Paste) adalah...", options: ["Ctrl + C", "Ctrl + P", "Ctrl + V", "Ctrl + X"], answer: 2 },
+  { q: "Kombinasi tombol keyboard untuk memotong (Cut) teks/gambar adalah...", options: ["Ctrl + C", "Ctrl + X", "Ctrl + V", "Ctrl + Z"], answer: 1 },
   { q: "Kombinasi tombol untuk membatalkan perintah terakhir (Undo) adalah...", options: ["Ctrl + U", "Ctrl + Z", "Ctrl + Y", "Ctrl + A"], answer: 1 },
+  { q: "Kombinasi tombol Ctrl + S pada aplikasi Office berfungsi untuk...", options: ["Menghapus File", "Membuka File", "Menyimpan File (Save)", "Mencetak File"], answer: 2 },
+  { q: "Kombinasi tombol Ctrl + P pada aplikasi Office berfungsi untuk...", options: ["Paste", "Print (Mencetak)", "Paragraph", "Properties"], answer: 1 },
+  { q: "Pada Microsoft Word, perataan teks sehingga rata kiri dan kanan (penuh) disebut...", options: ["Align Left", "Align Right", "Center", "Justify"], answer: 3 },
+  { q: "Fungsi dari ikon 'Bold' (berlogo B tebal) pada Word adalah...", options: ["Membuat huruf miring", "Memberi garis bawah", "Menebalkan huruf", "Mewarnai huruf"], answer: 2 },
+  { q: "Shortcut keyboard untuk menebalkan teks (Bold) adalah...", options: ["Ctrl + B", "Ctrl + I", "Ctrl + U", "Ctrl + D"], answer: 0 },
+  { q: "Fungsi dari ikon 'Italic' (berlogo I miring) adalah...", options: ["Menebalkan tulisan", "Membuat tulisan miring", "Mencetak dokumen", "Memberi garis bawah"], answer: 1 },
+  { q: "Jarak antara teks dengan tepi kertas (atas, bawah, kiri, kanan) disebut...", options: ["Spacing", "Indent", "Margin", "Border"], answer: 2 },
+  { q: "Satu kotak pertemuan antara kolom (Column) dan baris (Row) pada Excel disebut...", options: ["Table", "Box", "Cell (Sel)", "Range"], answer: 2 },
+  { q: "Kumpulan dari beberapa Cell pada Excel (misal blok dari A1 sampai C3) disebut...", options: ["Row", "Column", "Sheet", "Range"], answer: 3 },
+  { q: "Setiap penulisan rumus fungsi di Microsoft Excel harus selalu diawali dengan tanda...", options: ["+", "-", "=", ":"], answer: 2 },
   { q: "Rumus Excel yang digunakan untuk menjumlahkan total sekumpulan angka adalah...", options: ["=AVERAGE", "=SUM", "=MAX", "=MIN"], answer: 1 },
-  // --- BERPIKIR KOMPUTASIONAL ---
+  { q: "Rumus Excel yang digunakan untuk mencari nilai rata-rata adalah...", options: ["=TOTAL", "=COUNT", "=SUM", "=AVERAGE"], answer: 3 },
+  { q: "Rumus Excel yang digunakan untuk mencari nilai tertinggi (terbesar) adalah...", options: ["=HIGH", "=TOP", "=MAX", "=MIN"], answer: 2 },
+  { q: "Rumus Excel yang digunakan untuk mencari nilai terendah (terkecil) adalah...", options: ["=LOW", "=MAX", "=MIN", "=BOTTOM"], answer: 2 },
+  { q: "Fungsi/rumus logika pada Excel yang bisa menghasilkan nilai Benar (True) atau Salah (False) adalah fungsi...", options: ["=IF", "=VLOOKUP", "=COUNT", "=SUM"], answer: 0 },
+  { q: "Lembar kerja utama dalam sebuah file Microsoft Excel disebut dengan...", options: ["Slide", "Document", "Worksheet", "Page"], answer: 2 },
+  { q: "Satu lembar kerja presentasi di dalam Microsoft PowerPoint disebut...", options: ["Page", "Sheet", "Slide", "Panel"], answer: 2 },
+  { q: "Efek animasi pergerakan ketika berpindah dari satu slide ke slide lainnya di PPT disebut...", options: ["Animation", "Transition", "Design", "Effect"], answer: 1 },
+  { q: "Tombol fungsi di keyboard yang digunakan untuk memulai Slide Show dari slide pertama adalah...", options: ["F1", "F3", "F5", "F12"], answer: 2 },
+  { q: "Tombol yang ditekan untuk keluar dari mode layar penuh (Slide Show) pada presentasi adalah...", options: ["Enter", "Space", "Shift", "Esc"], answer: 3 },
+  { q: "Jika kita ingin menambahkan gambar ke dalam slide presentasi, kita memilih menu...", options: ["Home -> Picture", "Insert -> Pictures", "Design -> Image", "View -> Photo"], answer: 1 },
+  { q: "Pada Word, fitur untuk membuat daftar berurut menggunakan angka/huruf (1, 2, 3...) disebut...", options: ["Bullets", "Numbering", "Multilevel", "Sorting"], answer: 1 },
+  { q: "Aplikasi Office online gratis buatan Google yang setara dengan Microsoft Excel adalah...", options: ["Google Docs", "Google Slides", "Google Drive", "Google Sheets"], answer: 3 },
+
+  // ==========================================
+  // KATEGORI 5: BERPIKIR KOMPUTASIONAL & CODING (30 Soal)
+  // ==========================================
   { q: "Langkah-langkah logis dan sistematis yang disusun untuk menyelesaikan suatu masalah disebut...", options: ["Algoritma", "Coding", "Program", "Jaringan"], answer: 0 },
   { q: "Cara penulisan algoritma menggunakan bagan atau bentuk-bentuk geometri disebut...", options: ["Grafik", "Flowchart", "Tabel", "Bagan Struktur"], answer: 1 },
   { q: "Cara berpikir memecahkan masalah layaknya seorang ilmuwan komputer disebut...", options: ["Computational Thinking", "Critical Thinking", "Design Thinking", "Creative Thinking"], answer: 0 },
-  { q: "Tindakan kejahatan memanipulasi atau menipu orang untuk mencuri password/data disebut...", options: ["Bullying", "Phishing", "Browsing", "Spamming"], answer: 1 },
-  { q: "Berita atau informasi palsu yang sengaja disebarkan di internet untuk menipu disebut...", options: ["Fakta", "Hoaks (Hoax)", "Phishing", "Spam"], answer: 1 }
+  { q: "Dalam berpikir komputasional, memecah masalah besar yang kompleks menjadi bagian-bagian kecil yang lebih mudah dikerjakan disebut...", options: ["Pengenalan Pola", "Dekomposisi", "Abstraksi", "Algoritma"], answer: 1 },
+  { q: "Mengabaikan detail-detail yang tidak penting dan hanya fokus pada informasi utama dari suatu masalah disebut...", options: ["Dekomposisi", "Pengenalan Pola", "Abstraksi", "Evaluasi"], answer: 2 },
+  { q: "Mencari persamaan atau perbedaan dari berbagai masalah/data (mencari trend/keteraturan) disebut...", options: ["Dekomposisi", "Pengenalan Pola", "Abstraksi", "Algoritma"], answer: 1 },
+  { q: "Tahapan menuliskan kode program (menerjemahkan algoritma ke bahasa pemrograman) disebut...", options: ["Testing", "Coding", "Debugging", "Designing"], answer: 1 },
+  { q: "Orang yang pekerjaannya menulis kode/merancang perangkat lunak komputer disebut...", options: ["Hacker", "Gamer", "Programmer", "Animator"], answer: 2 },
+  { q: "Dalam flowchart, simbol berbentuk 'Oval/Elips' digunakan untuk...", options: ["Input/Output data", "Proses perhitungan", "Kondisi/Pilihan", "Mulai (Start) dan Selesai (End)"], answer: 3 },
+  { q: "Dalam flowchart, simbol berbentuk 'Jajar Genjang' melambangkan...", options: ["Proses", "Keputusan/Kondisi", "Mulai/Selesai", "Input / Output"], answer: 3 },
+  { q: "Dalam flowchart, simbol berbentuk 'Persegi Panjang' melambangkan...", options: ["Proses/Aksi", "Input/Output", "Keputusan", "Start"], answer: 0 },
+  { q: "Dalam flowchart, simbol berbentuk 'Belah Ketupat (Diamond)' melambangkan...", options: ["Mulai", "Proses", "Keputusan / Percabangan", "Tamat"], answer: 2 },
+  { q: "Bahasa pemrograman visual yang menggunakan blok-blok puzzle (drag-and-drop), sangat cocok untuk pemula/anak-anak adalah...", options: ["Python", "C++", "Scratch", "Java"], answer: 2 },
+  { q: "Kesalahan, cacat, atau kegagalan pada suatu program komputer yang membuatnya tidak berfungsi dengan benar disebut...", options: ["Virus", "Bug", "Spam", "Lag"], answer: 1 },
+  { q: "Proses mencari dan memperbaiki kesalahan/bug di dalam sebuah kode program disebut...", options: ["Coding", "Compiling", "Debugging", "Executing"], answer: 2 },
+  { q: "Tempat atau wadah di memori komputer yang digunakan untuk menyimpan suatu nilai/data sementara di dalam program disebut...", options: ["Fungsi", "Looping", "Variabel", "Operator"], answer: 2 },
+  { q: "Tipe data yang hanya menyimpan nilai kebenaran: True (Benar) atau False (Salah) disebut...", options: ["Integer", "String", "Boolean", "Float"], answer: 2 },
+  { q: "Tipe data yang digunakan untuk menyimpan teks (kumpulan huruf/karakter) adalah...", options: ["Integer", "String", "Float", "Boolean"], answer: 1 },
+  { q: "Tipe data yang digunakan untuk menyimpan bilangan bulat (tanpa koma/desimal) adalah...", options: ["String", "Float", "Char", "Integer"], answer: 3 },
+  { q: "Proses berulang (mengulang suatu blok kode selama kondisi terpenuhi) dalam pemrograman disebut...", options: ["Looping (Perulangan)", "Branching (Percabangan)", "Variable", "Array"], answer: 0 },
+  { q: "Struktur logika yang memilih jalan/kode mana yang dieksekusi berdasarkan suatu kondisi (If-Else) disebut...", options: ["Looping", "Percabangan (Branching)", "Sequence", "Input"], answer: 1 },
+  { q: "Cara penulisan algoritma yang menyerupai bahasa pemrograman sesungguhnya (tapi bukan sintaks baku) agar mudah dipahami manusia disebut...", options: ["Flowchart", "Pseudocode", "Source Code", "Machine Code"], answer: 1 },
+  { q: "Operator matematika dalam pemrograman yang digunakan untuk operasi perkalian adalah simbol...", options: ["x", ":", "* (Bintang)", "/ (Garis miring)"], answer: 2 },
+  { q: "Program atau alat yang menerjemahkan seluruh bahasa pemrograman manusia menjadi bahasa mesin sekaligus adalah...", options: ["Compiler", "Editor", "Debugger", "Browser"], answer: 0 },
+  { q: "Bahasa tingkat sangat rendah (low-level language) yang hanya terdiri dari angka 0 dan 1 disebut...", options: ["Bahasa Assembly", "Bahasa Mesin (Biner)", "Bahasa Python", "Bahasa Inggris"], answer: 1 },
+  { q: "Bahasa pemrograman populer yang sangat identik dengan kecerdasan buatan (AI) dan sintaksnya sangat sederhana adalah...", options: ["HTML", "C++", "Java", "Python"], answer: 3 },
+  { q: "Bahasa markup standar yang digunakan untuk membuat struktur halaman web di internet adalah...", options: ["CSS", "PHP", "JavaScript", "HTML"], answer: 3 },
+  { q: "Perangkat lunak yang digunakan sebagai tempat programmer mengetikkan baris-baris kode (seperti VS Code, Sublime) disebut...", options: ["Text Editor / IDE", "Web Browser", "Terminal", "Spreadsheet"], answer: 0 },
+  { q: "Berikut ini yang BUKAN merupakan bahasa pemrograman adalah...", options: ["Python", "Java", "C++", "Microsoft Word"], answer: 3 },
+  { q: "Operator logika yang mengharuskan KEDUA kondisi bernilai BENAR agar hasilnya BENAR adalah...", options: ["OR", "NOT", "AND", "XOR"], answer: 2 },
+
+  // ==========================================
+  // KATEGORI 6: KEAMANAN, SOSMED & ETIKA (30 Soal)
+  // ==========================================
+  { q: "Tindakan kejahatan memanipulasi atau menipu orang untuk mencuri password/data dengan membuat web/email palsu disebut...", options: ["Bullying", "Phishing", "Browsing", "Spamming"], answer: 1 },
+  { q: "Berita atau informasi palsu yang sengaja disebarkan di internet untuk menipu dan meresahkan disebut...", options: ["Fakta", "Hoaks (Hoax)", "Phishing", "Spam"], answer: 1 },
+  { q: "Istilah untuk sampah digital, yaitu pesan/email promosi berantai yang dikirim secara massal tanpa kita kehendaki adalah...", options: ["Virus", "Bug", "Spam", "Scam"], answer: 2 },
+  { q: "Tindakan perundungan, pengejekan, atau pelecehan yang dilakukan melalui media sosial/internet disebut...", options: ["Cyberstalking", "Cyberbullying", "Phishing", "Hacking"], answer: 1 },
+  { q: "Kumpulan rekaman aktivitas, postingan, dan riwayat kunjungan kita yang tertinggal permanen di internet disebut...", options: ["Jejak Kaki", "Jejak Digital (Digital Footprint)", "Cookie", "History Log"], answer: 1 },
+  { q: "Berikut ini ciri-ciri password yang KUAT dan aman, kecuali...", options: ["Terdiri dari huruf besar & kecil", "Mengandung angka & simbol", "Panjangnya lebih dari 8 karakter", "Menggunakan tanggal lahir sendiri"], answer: 3 },
+  { q: "Kode sandi rahasia satu kali pakai yang dikirimkan via SMS/WhatsApp untuk memverifikasi login disebut...", options: ["PIN", "Password", "OTP (One Time Password)", "Barcode"], answer: 2 },
+  { q: "Fitur keamanan berlapis dimana kita butuh password DAN kode OTP untuk login disebut...", options: ["Antivirus", "2FA (Two-Factor Authentication)", "Incognito Mode", "Firewall"], answer: 1 },
+  { q: "Tindakan mengambil karya, tulisan, atau gambar orang lain di internet dan mengakuinya sebagai karya sendiri disebut...", options: ["Modifikasi", "Inspirasi", "Plagiarisme", "Kutipan"], answer: 2 },
+  { q: "Etika atau tata krama saat berkomunikasi di dunia maya (internet) disebut...", options: ["Manners", "Etiquette", "Netiquette (Netizen Etiquette)", "Rules"], answer: 2 },
+  { q: "Mengubah teks asli menjadi kode rahasia yang tidak dapat dibaca orang lain demi keamanan data disebut...", options: ["Deskripsi", "Enkripsi", "Ekstraksi", "Kompresi"], answer: 1 },
+  { q: "Seseorang yang memiliki keahlian komputer dan secara ilegal meretas masuk sistem untuk merusak/mencuri data (jahat) disebut...", options: ["White Hat Hacker", "Cracker / Black Hat Hacker", "Programmer", "Admin Server"], answer: 1 },
+  { q: "Program jahat yang menyandera/mengunci file komputer korban dan meminta tebusan uang untuk membukanya disebut...", options: ["Ransomware", "Adware", "Trojan", "Worm"], answer: 0 },
+  { q: "Malware yang menyamar sebagai program aplikasi asli/berguna padahal di dalamnya terdapat kode jahat disebut...", options: ["Trojan Horse", "Worm", "Spyware", "Ransomware"], answer: 0 },
+  { q: "Program jahat yang merekam setiap tombol keyboard yang diketik pengguna untuk mencuri password disebut...", options: ["Adware", "Keylogger", "Worm", "Botnet"], answer: 1 },
+  { q: "Sistem keamanan pada jaringan (biasanya berupa software/hardware) yang berfungsi memblokir akses ilegal disebut...", options: ["Antivirus", "Router", "Firewall", "Web Server"], answer: 2 },
+  { q: "UU di Indonesia yang mengatur tentang informasi dan transaksi elektronik serta tindak pidana siber adalah...", options: ["UU HAM", "UU ITE", "UU Hak Cipta", "UU Lalu Lintas"], answer: 1 },
+  { q: "Sikap yang BENAR saat menerima berita provokatif di grup WhatsApp yang belum jelas kebenarannya adalah...", options: ["Langsung bagikan (forward) ke grup lain", "Balas dengan marah-marah", "Cari tahu kebenarannya (Saring sebelum Sharing)", "Percaya 100% pada berita tersebut"], answer: 2 },
+  { q: "Istilah untuk pengguna internet atau warga dunia maya adalah...", options: ["Citizen", "Netizen", "Gamer", "Surfer"], answer: 1 },
+  { q: "Hak eksklusif bagi pencipta untuk mengizinkan/melarang orang lain menggunakan karya ciptaannya disebut...", options: ["Hak Paten", "Hak Merek", "Hak Cipta (Copyright)", "Hak Guna"], answer: 2 },
+  { q: "Situs web media sosial populer untuk berbagi video berdurasi pendek yang berasal dari Tiongkok adalah...", options: ["Twitter", "Instagram", "TikTok", "Facebook"], answer: 2 },
+  { q: "Platform media sosial profesional yang digunakan untuk mencari pekerjaan dan membangun relasi karir adalah...", options: ["Snapchat", "LinkedIn", "Pinterest", "WhatsApp"], answer: 1 },
+  { q: "Fitur untuk menjelajahi internet tanpa menyimpan riwayat browsing, cookies, dan data situs di browser disebut...", options: ["Safe Mode", "Airplane Mode", "Incognito Mode / Private Window", "Dark Mode"], answer: 2 },
+  { q: "Istilah untuk penipuan finansial secara online, misal penjual palsu yang kabur setelah dibayar disebut...", options: ["Phishing", "Scamming (Scam)", "Spamming", "Hacking"], answer: 1 },
+  { q: "Sebutan untuk foto atau video asli yang dimanipulasi dengan AI sehingga tampak seperti tokoh asli yang mengatakan sesuatu yang tidak pernah ia katakan adalah...", options: ["Photoshop", "Deepfake", "Filter", "CGI"], answer: 1 },
+  { q: "Kegiatan membongkar/menyebarkan informasi pribadi seseorang (KTP, alamat, nomor HP) di internet tanpa izin untuk tujuan intimidasi disebut...", options: ["Phishing", "Stalking", "Doxing", "Spamming"], answer: 2 },
+  { q: "Jenis serangan siber yang mengirimkan lalu lintas palsu dalam jumlah sangat besar agar sebuah website lumpuh/down disebut...", options: ["DDoS Attack", "SQL Injection", "Man-in-the-Middle", "Ransomware"], answer: 0 },
+  { q: "Apabila kita menggunakan Wi-Fi publik tanpa password (di kafe/bandara), risiko keamanan yang paling mungkin terjadi adalah...", options: ["Komputer meledak", "Pencurian data/penyadapan oleh orang di jaringan yang sama", "Layar monitor berkedip", "Kecepatan internet menjadi sangat cepat"], answer: 1 },
+  { q: "Tindakan yang sebaiknya dilakukan jika tiba-tiba menerima SMS yang memenangkan hadiah undian ratusan juta rupiah beserta link web tidak dikenal adalah...", options: ["Segera klik link tersebut untuk klaim", "Kirimkan nomor rekening bank", "Telepon nomor pengirim", "Abaikan dan hapus SMS tersebut karena itu penipuan (Scam/Phishing)"], answer: 3 },
+  { q: "Pengaturan pada akun media sosial agar foto profil dan postingan kita HANYA bisa dilihat oleh teman yang disetujui disebut...", options: ["Public", "Private Account", "Business Account", "Verified Account"], answer: 1 }
 ];
 
 export default function App() {
@@ -161,7 +329,6 @@ export default function App() {
       }
     }
 
-    // PENGHAPUSAN setTimeout: Pemain sekarang harus klik tombol "Lanjut"
   }, [isTransitioning, questions, currentQuestionIndex, answerMerah, answerBiru, answerOrder]);
 
   // Handle Input Pemain: Menyimpan jawaban tanpa langsung mengevaluasi
