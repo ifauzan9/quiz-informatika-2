@@ -222,17 +222,17 @@ export default function App() {
   
   const [answerMerah, setAnswerMerah] = useState(null);
   const [answerBiru, setAnswerBiru] = useState(null);
-  const [answerOrder, setAnswerOrder] = useState([]); // STATE BARU: Melacak urutan pemain yang menjawab
+  const [answerOrder, setAnswerOrder] = useState([]);
   
-  const [historyMerah, setHistoryMerah] = useState([]); // STATE BARU: Track riwayat jawaban Merah
-  const [historyBiru, setHistoryBiru] = useState([]);   // STATE BARU: Track riwayat jawaban Biru
+  const [historyMerah, setHistoryMerah] = useState([]);
+  const [historyBiru, setHistoryBiru] = useState([]);
   
   const [timeLeft, setTimeLeft] = useState(15);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
-  const [showQuitModal, setShowQuitModal] = useState(false); // STATE BARU: Konfirmasi kembali ke menu
+  const [showQuitModal, setShowQuitModal] = useState(false);
 
-  // --- REFS (Mencegah Double-Tap / Sentuhan Multi-Jari Secara Instan) ---
+  // --- REFS (Mencegah Double-Tap Secara Instan) ---
   const lockMerah = useRef(false);
   const lockBiru = useRef(false);
 
@@ -249,7 +249,6 @@ export default function App() {
       [shuffledBank[i], shuffledBank[j]] = [shuffledBank[j], shuffledBank[i]];
     }
 
-    // Pastikan tidak mengambil lebih dari jumlah soal yang tersedia
     const maxQuestions = Math.min(settingQuestionCount, shuffledBank.length);
 
     setQuestions(shuffledBank.slice(0, maxQuestions));
@@ -258,14 +257,14 @@ export default function App() {
     setScoreBiru(0);
     setAnswerMerah(null);
     setAnswerBiru(null);
-    setAnswerOrder([]); // RESET URUTAN
+    setAnswerOrder([]);
     lockMerah.current = false;
     lockBiru.current = false;
-    setHistoryMerah([]); // RESET HISTORY
-    setHistoryBiru([]);  // RESET HISTORY
+    setHistoryMerah([]);
+    setHistoryBiru([]);
     setTimeLeft(settingTimeLimit);
     setIsTransitioning(false);
-    setShowQuitModal(false); // Tutup modal jika sebelumnya terbuka
+    setShowQuitModal(false);
     setGameState('playing');
   };
 
@@ -274,7 +273,7 @@ export default function App() {
       setCurrentQuestionIndex(prev => prev + 1);
       setAnswerMerah(null);
       setAnswerBiru(null);
-      setAnswerOrder([]); // RESET URUTAN
+      setAnswerOrder([]);
       lockMerah.current = false;
       lockBiru.current = false;
       setTimeLeft(settingTimeLimit);
@@ -299,14 +298,14 @@ export default function App() {
       return newHist;
     });
 
-    // Evaluasi Merah
+    // Evaluasi Merah (Sekarang bisa minus)
     if (answerMerah !== null) {
       if (answerMerah === correctAns) {
-        // Cek apakah merah yang menjawab pertama kali
         const points = answerOrder[0] === 'merah' ? 15 : 10;
         setScoreMerah(s => s + points);
       } else {
-        setScoreMerah(s => Math.max(0, s - 5));
+        // PERUBAHAN DI SINI: Tidak lagi menggunakan Math.max(0, s - 5)
+        setScoreMerah(s => s - 5);
       }
     }
 
@@ -318,48 +317,44 @@ export default function App() {
       return newHist;
     });
 
-    // Evaluasi Biru
+    // Evaluasi Biru (Sekarang bisa minus)
     if (answerBiru !== null) {
       if (answerBiru === correctAns) {
-        // Cek apakah biru yang menjawab pertama kali
         const points = answerOrder[0] === 'biru' ? 15 : 10;
         setScoreBiru(s => s + points);
       } else {
-        setScoreBiru(s => Math.max(0, s - 5));
+        // PERUBAHAN DI SINI: Tidak lagi menggunakan Math.max(0, s - 5)
+        setScoreBiru(s => s - 5);
       }
     }
 
   }, [isTransitioning, questions, currentQuestionIndex, answerMerah, answerBiru, answerOrder]);
 
-  // Handle Input Pemain: Menyimpan jawaban tanpa langsung mengevaluasi
   const handlePlayerInput = useCallback((player, selectedOption) => {
-    if (isTransitioning) return; // Abaikan input jika sedang masa transisi antar soal
+    if (isTransitioning) return;
 
     if (player === 'merah' && !lockMerah.current) {
-      lockMerah.current = true; // Kunci seketika! Cegah sentuhan beruntun dalam milidetik yang sama
+      lockMerah.current = true;
       setAnswerMerah(selectedOption);
       setAnswerOrder(prev => [...prev, 'merah']);
     } else if (player === 'biru' && !lockBiru.current) {
-      lockBiru.current = true; // Kunci seketika!
+      lockBiru.current = true;
       setAnswerBiru(selectedOption);
       setAnswerOrder(prev => [...prev, 'biru']);
     }
   }, [isTransitioning]);
 
-  // --- EFFECT: CEK JIKA KEDUA PEMAIN SUDAH MENJAWAB ---
   useEffect(() => {
     if (answerMerah !== null && answerBiru !== null && !isTransitioning) {
-      evaluateAnswers(); // Langsung evaluasi tanpa menunggu timer habis
+      evaluateAnswers();
     }
   }, [answerMerah, answerBiru, isTransitioning, evaluateAnswers]);
 
-  // --- EFFECT: TIMER ---
   useEffect(() => {
-    // Timer otomatis berhenti jika sedang transisi ATAU pop-up konfirmasi keluar muncul
     if (gameState !== 'playing' || isTransitioning || showQuitModal) return;
 
     if (timeLeft <= 0) {
-      evaluateAnswers(); // Waktu habis, evaluasi jawaban siapapun yang sudah masuk
+      evaluateAnswers();
       return;
     }
 
@@ -370,8 +365,30 @@ export default function App() {
     return () => clearInterval(timer);
   }, [gameState, isTransitioning, timeLeft, evaluateAnswers]);
 
+  // SUPPORT KEYBOARD (Opsional untuk Desktop)
+  useEffect(() => {
+    if (gameState !== 'playing' || isTransitioning || showQuitModal) return;
 
-  // --- RENDER HELPERS ---
+    const handleKeyDown = (e) => {
+      const key = e.key.toLowerCase();
+      
+      // Pemain Merah: A, S, Z, X
+      if (['a', 's', 'z', 'x'].includes(key) && answerMerah === null) {
+        const optionsMap = { 'a': 0, 's': 1, 'z': 2, 'x': 3 };
+        handlePlayerInput('merah', optionsMap[key]);
+      }
+      
+      // Pemain Biru: H, J, N, M
+      if (['h', 'j', 'n', 'm'].includes(key) && answerBiru === null) {
+        const optionsMap = { 'h': 0, 'j': 1, 'n': 2, 'm': 3 };
+        handlePlayerInput('biru', optionsMap[key]);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [gameState, isTransitioning, showQuitModal, answerMerah, answerBiru, handlePlayerInput]);
+
   const currentQ = questions[currentQuestionIndex];
 
   // ==========================================
@@ -508,28 +525,21 @@ export default function App() {
         <div className="flex flex-col gap-2 w-36 md:w-56">
           <div className="bg-red-950/50 border border-red-900 px-4 py-2 rounded-lg flex items-center justify-between shadow-inner">
             <span className="font-bold text-red-400 text-sm md:text-base">MERAH</span>
-            <span className="text-xl md:text-2xl font-black text-white">{scoreMerah}</span>
+            <span className={`text-xl md:text-2xl font-black ${scoreMerah < 0 ? 'text-red-300' : 'text-white'}`}>{scoreMerah}</span>
           </div>
           
-          {/* TRACKER PENALTI MERAH */}
           <div className="flex flex-wrap gap-1 mt-1 justify-start">
             {questions.map((_, idx) => {
               const status = historyMerah[idx];
-              let bgColor = "bg-slate-800 border border-slate-700/50"; // Default (Belum)
+              let bgColor = "bg-slate-800 border border-slate-700/50"; 
               if (status === 'correct') bgColor = "bg-emerald-500 border border-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.5)]";
               else if (status === 'wrong' || status === 'miss') bgColor = "bg-red-500 border border-red-400 shadow-[0_0_8px_rgba(220,38,38,0.5)]";
-              
               return (
-                <div 
-                  key={`track-merah-${idx}`} 
-                  className={`w-2.5 h-2.5 md:w-3.5 md:h-3.5 rounded-full ${bgColor} transition-colors duration-300`}
-                  title={`Soal ${idx + 1}`}
-                />
+                <div key={`track-merah-${idx}`} className={`w-2.5 h-2.5 md:w-3.5 md:h-3.5 rounded-full ${bgColor} transition-colors duration-300`} title={`Soal ${idx + 1}`} />
               );
             })}
           </div>
 
-          {/* Status Indikator Menjawab */}
           <div className="h-6">
             {answerMerah !== null && !isTransitioning && (
               <div className="bg-emerald-900/40 border border-emerald-500/50 text-emerald-400 text-xs font-bold py-1 px-2 rounded flex items-center justify-center gap-1 animate-pulse shadow-sm">
@@ -550,7 +560,7 @@ export default function App() {
               <Home className="w-5 h-5" />
             </button>
             <span className="text-sm font-semibold text-slate-400">Soal {currentQuestionIndex + 1}/{questions.length}</span>
-            <div className="w-5"></div> {/* Spacer kosong agar teks tetap di tengah */}
+            <div className="w-5"></div>
           </div>
           <div className={`flex items-center gap-2 px-4 py-1.5 rounded-full font-mono text-xl font-bold border shadow-inner ${timeLeft <= 5 ? 'bg-red-950 border-red-900 text-red-400 animate-pulse' : 'bg-slate-950 border-slate-800 text-blue-400'}`}>
             <Clock className="w-5 h-5" />
@@ -561,29 +571,22 @@ export default function App() {
         {/* Papan Skor & Status Biru */}
         <div className="flex flex-col gap-2 w-36 md:w-56">
           <div className="bg-blue-950/50 border border-blue-900 px-4 py-2 rounded-lg flex items-center justify-between shadow-inner">
-            <span className="text-xl md:text-2xl font-black text-white">{scoreBiru}</span>
+            <span className={`text-xl md:text-2xl font-black ${scoreBiru < 0 ? 'text-red-300' : 'text-white'}`}>{scoreBiru}</span>
             <span className="font-bold text-blue-400 text-sm md:text-base">BIRU</span>
           </div>
           
-          {/* TRACKER PENALTI BIRU */}
           <div className="flex flex-wrap gap-1 mt-1 justify-end">
             {questions.map((_, idx) => {
               const status = historyBiru[idx];
-              let bgColor = "bg-slate-800 border border-slate-700/50"; // Default (Belum)
+              let bgColor = "bg-slate-800 border border-slate-700/50";
               if (status === 'correct') bgColor = "bg-emerald-500 border border-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.5)]";
               else if (status === 'wrong' || status === 'miss') bgColor = "bg-red-500 border border-red-400 shadow-[0_0_8px_rgba(220,38,38,0.5)]";
-              
               return (
-                <div 
-                  key={`track-biru-${idx}`} 
-                  className={`w-2.5 h-2.5 md:w-3.5 md:h-3.5 rounded-full ${bgColor} transition-colors duration-300`}
-                  title={`Soal ${idx + 1}`}
-                />
+                <div key={`track-biru-${idx}`} className={`w-2.5 h-2.5 md:w-3.5 md:h-3.5 rounded-full ${bgColor} transition-colors duration-300`} title={`Soal ${idx + 1}`} />
               );
             })}
           </div>
 
-          {/* Status Indikator Menjawab */}
           <div className="h-6">
             {answerBiru !== null && !isTransitioning && (
               <div className="bg-emerald-900/40 border border-emerald-500/50 text-emerald-400 text-xs font-bold py-1 px-2 rounded flex items-center justify-center gap-1 animate-pulse shadow-sm">
@@ -600,14 +603,13 @@ export default function App() {
           {currentQ.q}
         </h2>
 
-        {/* --- LAYOUT SPLIT BARU: AREA MERAH & AREA BIRU --- */}
+        {/* LAYOUT SPLIT: AREA MERAH & AREA BIRU */}
         <div className="flex flex-col md:flex-row w-full max-w-6xl gap-6 md:gap-12">
           
           {/* AREA MERAH */}
           <div className="flex-1 flex flex-col gap-3">
             <h3 className="text-lg font-bold text-red-500 text-center mb-2 uppercase tracking-widest border-b border-red-900/50 pb-2">Area Merah</h3>
             
-            {/* NOTIFIKASI STATUS MERAH */}
             {isTransitioning && (
               <div className="animate-in zoom-in duration-300">
                 {answerMerah === null ? (
@@ -647,7 +649,7 @@ export default function App() {
                   className={`relative p-4 md:p-5 rounded-xl border-2 transition-all duration-300 ${boxColor} flex items-center min-h-[4rem] touch-none select-none ${answerMerah === null && !isTransitioning ? 'cursor-pointer hover:scale-[1.02] active:scale-95' : 'cursor-default'}`}
                 >
                   <div className="absolute top-1/2 -translate-y-1/2 left-3 bg-slate-900 text-slate-400 font-bold text-xs px-3 py-1.5 rounded shadow-inner">
-                    {['A', 'B', 'C', 'D'][idx]}
+                    {['A', 'S', 'Z', 'X'][idx]} {/* Memperbarui tombol keyboard */}
                   </div>
                   <p className="text-sm md:text-base font-medium ml-12 pr-10">{opt}</p>
                   
@@ -661,14 +663,12 @@ export default function App() {
             })}
           </div>
 
-          {/* Garis Pemisah Tengah (Hanya di Desktop) */}
           <div className="hidden md:flex w-px bg-slate-700/50"></div>
 
           {/* AREA BIRU */}
           <div className="flex-1 flex flex-col gap-3">
             <h3 className="text-lg font-bold text-blue-500 text-center mb-2 uppercase tracking-widest border-b border-blue-900/50 pb-2">Area Biru</h3>
             
-            {/* NOTIFIKASI STATUS BIRU */}
             {isTransitioning && (
               <div className="animate-in zoom-in duration-300">
                 {answerBiru === null ? (
@@ -708,7 +708,7 @@ export default function App() {
                   className={`relative p-4 md:p-5 rounded-xl border-2 transition-all duration-300 ${boxColor} flex items-center min-h-[4rem] touch-none select-none ${answerBiru === null && !isTransitioning ? 'cursor-pointer hover:scale-[1.02] active:scale-95' : 'cursor-default'}`}
                 >
                   <div className="absolute top-1/2 -translate-y-1/2 left-3 bg-slate-900 text-slate-400 font-bold text-xs px-3 py-1.5 rounded shadow-inner">
-                    {['A', 'B', 'C', 'D'][idx]}
+                    {['H', 'J', 'N', 'M'][idx]} {/* Memperbarui tombol keyboard */}
                   </div>
                   <p className="text-sm md:text-base font-medium ml-12 pr-10">{opt}</p>
                   
@@ -724,7 +724,6 @@ export default function App() {
 
         </div>
 
-        {/* TOMBOL LANJUT (Muncul hanya setelah evaluasi nilai) */}
         {isTransitioning && (
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 animate-in slide-in-from-bottom-4">
             <button
@@ -737,11 +736,31 @@ export default function App() {
         )}
       </main>
 
-      {/* Footer Info Baru */}
-      <footer className="bg-slate-950 p-3 border-t border-slate-800 z-10 flex justify-center text-center px-6 relative">
-         <div className="text-slate-400 font-semibold text-xs md:text-sm animate-pulse">
-           ⚡ Adu Cepat! Jawaban Benar Pertama: <span className="text-emerald-400">+15 Poin</span> | Benar Kedua: <span className="text-emerald-400">+10 Poin</span> | Salah: <span className="text-red-400">-5 Poin</span> ⚡
-         </div>
+      {/* Footer Info & Keyboard Layout */}
+      <footer className="bg-slate-950 p-2 border-t border-slate-800 z-10 flex flex-col items-center justify-center relative px-4 gap-2">
+        <div className="text-slate-400 font-semibold text-xs animate-pulse text-center">
+          ⚡ Jawaban Benar Pertama: <span className="text-emerald-400">+15</span> | Benar Kedua: <span className="text-emerald-400">+10</span> | Salah: <span className="text-red-400">-5</span> ⚡
+        </div>
+        
+        {/* Tampilan Keyboard Guide dari versi sebelumnya */}
+        <div className="flex w-full justify-between items-center max-w-5xl px-4 pb-2">
+          <div className={`flex items-center gap-2 transition-all duration-300 ${answerMerah !== null ? 'opacity-30 grayscale blur-[1px]' : 'opacity-100'}`}>
+            <Keyboard className="text-red-500 w-4 h-4 hidden sm:block" />
+            <div className="flex gap-1">
+              {['A', 'S', 'Z', 'X'].map((k) => (
+                <kbd key={k} className="inline-block px-2 py-0.5 bg-red-900/50 text-red-200 rounded text-xs font-mono font-bold border-b-2 border-red-950">{k}</kbd>
+              ))}
+            </div>
+          </div>
+          <div className={`flex items-center gap-2 transition-all duration-300 ${answerBiru !== null ? 'opacity-30 grayscale blur-[1px]' : 'opacity-100'}`}>
+            <div className="flex gap-1">
+              {['H', 'J', 'N', 'M'].map((k) => (
+                <kbd key={k} className="inline-block px-2 py-0.5 bg-blue-900/50 text-blue-200 rounded text-xs font-mono font-bold border-b-2 border-blue-950">{k}</kbd>
+              ))}
+            </div>
+            <Keyboard className="text-blue-500 w-4 h-4 hidden sm:block" />
+          </div>
+        </div>
       </footer>
 
       {/* MODAL KONFIRMASI KELUAR */}
@@ -752,16 +771,10 @@ export default function App() {
             <h3 className="text-xl font-bold text-white mb-2">Kembali ke Menu?</h3>
             <p className="text-slate-400 text-sm mb-6">Permainan yang sedang berlangsung akan dihentikan dan progres skor akan hilang.</p>
             <div className="flex gap-3">
-              <button 
-                onClick={() => setShowQuitModal(false)} 
-                className="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-xl transition"
-              >
+              <button onClick={() => setShowQuitModal(false)} className="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-xl transition">
                 Batal
               </button>
-              <button 
-                onClick={() => { setShowQuitModal(false); setGameState('menu'); }} 
-                className="flex-1 bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl transition shadow-[0_0_15px_rgba(220,38,38,0.4)]"
-              >
+              <button onClick={() => { setShowQuitModal(false); setGameState('menu'); }} className="flex-1 bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl transition shadow-[0_0_15px_rgba(220,38,38,0.4)]">
                 Ya, Keluar
               </button>
             </div>
@@ -772,9 +785,6 @@ export default function App() {
   );
 }
 
-// ==========================================
-// COMPONENT: HELP MODAL
-// ==========================================
 function HelpModal({ onClose }) {
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
@@ -791,17 +801,19 @@ function HelpModal({ onClose }) {
           <div>
             <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2"><Trophy className="w-5 h-5 text-yellow-400" /> Tujuan Permainan</h3>
             <p className="text-sm leading-relaxed">
-              Kuis ini adalah permainan adu cepat 1 lawan 1 menggunakan sentuhan/klik. Dua pemain saling berlomba menjawab pertanyaan dengan menekan pilihan pada areanya masing-masing. <strong className="text-white">Sistem akan menunggu kedua pemain menjawab atau waktu habis sebelum membuka kunci jawaban.</strong>
+              Kuis ini adalah permainan adu cepat 1 lawan 1 menggunakan sentuhan layar atau tombol keyboard PC. <strong className="text-white">Sistem akan menunggu kedua pemain menjawab atau waktu habis sebelum membuka kunci jawaban.</strong>
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-red-950/30 border border-red-900/50 p-4 rounded-xl flex flex-col items-center justify-center text-center">
               <h4 className="font-bold text-red-400 mb-2">🔴 Pemain Merah (Kiri)</h4>
-              <p className="text-xs">Sentuh / Klik langsung pada kotak jawaban di area kiri layar.</p>
+              <p className="text-xs mb-2">Sentuh kotak kiri atau gunakan tombol keyboard:</p>
+              <div className="flex gap-1"><kbd className="bg-slate-700 px-2 py-1 rounded text-white font-mono text-xs">A</kbd><kbd className="bg-slate-700 px-2 py-1 rounded text-white font-mono text-xs">S</kbd><kbd className="bg-slate-700 px-2 py-1 rounded text-white font-mono text-xs">Z</kbd><kbd className="bg-slate-700 px-2 py-1 rounded text-white font-mono text-xs">X</kbd></div>
             </div>
             <div className="bg-blue-950/30 border border-blue-900/50 p-4 rounded-xl flex flex-col items-center justify-center text-center">
               <h4 className="font-bold text-blue-400 mb-2">🔵 Pemain Biru (Kanan)</h4>
-              <p className="text-xs">Sentuh / Klik langsung pada kotak jawaban di area kanan layar.</p>
+              <p className="text-xs mb-2">Sentuh kotak kanan atau gunakan tombol keyboard:</p>
+              <div className="flex gap-1"><kbd className="bg-slate-700 px-2 py-1 rounded text-white font-mono text-xs">H</kbd><kbd className="bg-slate-700 px-2 py-1 rounded text-white font-mono text-xs">J</kbd><kbd className="bg-slate-700 px-2 py-1 rounded text-white font-mono text-xs">N</kbd><kbd className="bg-slate-700 px-2 py-1 rounded text-white font-mono text-xs">M</kbd></div>
             </div>
           </div>
           <div>
@@ -809,7 +821,7 @@ function HelpModal({ onClose }) {
             <ul className="list-disc pl-5 space-y-2 text-sm">
               <li>Menjawab <strong>Benar (Pertama)</strong>: <strong className="text-emerald-400">+15 Poin</strong>.</li>
               <li>Menjawab <strong>Benar (Kedua)</strong>: <strong className="text-emerald-400">+10 Poin</strong>.</li>
-              <li>Jawaban <strong>Salah</strong>: <strong className="text-red-400">-5 Poin</strong>.</li>
+              <li>Jawaban <strong>Salah</strong>: <strong className="text-red-400">-5 Poin</strong> (Skor bisa menjadi minus).</li>
             </ul>
           </div>
         </div>
